@@ -1,7 +1,10 @@
 {
   "name": "ns-ng-course-shared",
   "nativescript": {
-    "id": "org.nativescript.nsngcourseshared"
+    "id": "org.nativescript.nsngcourseshared",
+    "tns-android": {
+      "version": "5.2.1"
+    }
   },
   "version": "0.0.0",
   "scripts": {
