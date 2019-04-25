@@ -8,7 +8,7 @@ import { FormService } from '../helpers/form.service';
 @Component({
   selector: 'ns-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css'],
+  styleUrls: ['./auth.component.scss']
 
 })
 export class AuthComponent implements OnInit {
