@@ -29,7 +29,7 @@ interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private _user = new BehaviorSubject<User>(null);
-  private tokenExpirationTimer: number;
+  private tokenExpirationTimer: any;
 
   constructor(
       private http: HttpClient,
@@ -57,7 +57,7 @@ export class AuthService {
               email,
               resData.idToken,
               resData.localId,
-              parseInt(resData.expiresIn)
+              parseInt(resData.expiresIn, 10)
             );
           }
         })
@@ -81,7 +81,7 @@ export class AuthService {
               email,
               resData.idToken,
               resData.localId,
-              parseInt(resData.expiresIn)
+              parseInt(resData.expiresIn, 10)
             );
           }
         })

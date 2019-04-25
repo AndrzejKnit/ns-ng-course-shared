@@ -1,6 +1,6 @@
 import { CanLoad, UrlSegment, Route} from "@angular/router";
 import { Injectable } from "@angular/core";
-import { RouterExtensions } from "nativescript-angular/router";
+import { Router } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { take, switchMap, tap } from "rxjs/operators";
 import { AuthService } from "./auth.service";
@@ -9,7 +9,7 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class AuthGuard implements CanLoad {
 
-constructor(private authService: AuthService, private route: RouterExtensions) {}
+constructor(private authService: AuthService, private route: Router) {}
 
 canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.user.pipe(take(1), switchMap(currentUser => {
