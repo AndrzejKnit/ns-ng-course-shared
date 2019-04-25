@@ -118,7 +118,7 @@ export class AuthService {
       this.autoLogout(loadedUser.timeToExpiry);
       return of(true);
     }
-    return of(false); 
+    return of(false);
   }
 
   autoLogout(expiryDuration: number) {
