@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="form">
+<form [formGroup]="form" class="form" (submit)="onSubmit()">
   <div class="input-field">
     <label for="email" class="label">E-mail</label>
     <input type="email" id="email" formControlName="email" class="input">
@@ -7,6 +7,7 @@
       <label for="password" class="label">Password</label>
       <input type="password" id="password" formControlName="password" class="input">
     </div>
+    <button type="button" class="btn-flat">Toggle</button>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 

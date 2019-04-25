@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject, of } from 'rxjs';
-import { alert } from 'tns-core-modules/ui/dialogs';
-import { RouterExtensions } from 'nativescript-angular/router';
-import {
-  setString,
-  getString,
-  hasKey,
-  remove
-} from 'tns-core-modules/application-settings';
+
 
 import { User } from './user.model';
+import { RoutingService } from '../helpers/routing.service';
+import { DialogService } from '../helpers/dialog.service';
+import { StorageService } from '../helpers/storage.service';
 
 
 const FIREBASE_API_KEY = 'AIzaSyB6OvfualQIwAJHZHwL01Hk9W4cs8KVhfU';
@@ -33,7 +29,9 @@ export class AuthService {
 
   constructor(
       private http: HttpClient,
-      private router: RouterExtensions
+      private routerService: RoutingService,
+      private dialogService: DialogService,
+      private storageService: StorageService
      ) {}
 
   get user() {
@@ -90,15 +88,15 @@ export class AuthService {
 
   logout() {
     this._user.next(null);
-    remove('userData');
+    this.storageService.remove('userData');
     if (this.tokenExpirationTimer) {
         clearTimeout(this.tokenExpirationTimer);
     }
-    this.router.navigate(['/auth'], { clearHistory: true });
+    this.routerService.replace(['/auth']);
   }
 
   autoLogin() {
-    if (!hasKey('userData')) {
+    if (!this.storageService.hasKey('userData')) {
       return of(false);
     }
     const userData: {
@@ -106,7 +104,7 @@ export class AuthService {
       id: string;
       _token: string;
       _tokenExpirationDate: string;
-    } = JSON.parse(getString('userData'));
+    } = JSON.parse(this.storageService.getString('userData'));
 
     const loadedUser = new User(
       userData.email,
@@ -120,7 +118,7 @@ export class AuthService {
       this.autoLogout(loadedUser.timeToExpiry);
       return of(true);
     }
-    return of(false);
+    return of(false); 
   }
 
   autoLogout(expiryDuration: number) {
@@ -135,7 +133,7 @@ export class AuthService {
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
-    setString('userData', JSON.stringify(user));
+    this.storageService.storeString('userData', JSON.stringify(user));
     this.autoLogout(user.timeToExpiry);
     this._user.next(user);
   }
@@ -143,13 +141,13 @@ export class AuthService {
   private handleError(errorMessage: string) {
     switch (errorMessage) {
       case 'EMAIL_EXISTS':
-        alert('This email address exists already!');
+        this.dialogService.alert('This email address exists already!');
         break;
       case 'INVALID_PASSWORD':
-        alert('Your password is invalid!');
+      this.dialogService.alert('Your password is invalid!');
         break;
       default:
-        alert('Authentication failed, check your credentials.');
+      this.dialogService.alert('Authentication failed, check your credentials.');
     }
   }
 }
