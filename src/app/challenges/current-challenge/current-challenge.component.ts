@@ -14,8 +14,7 @@ import { Day, DayStatus } from '../day.model';
   styleUrls: [
     './_current-challenge.component.common.scss',
     './current-challenge.component.scss'
-  ],
-  moduleId: module.id
+  ]
 })
 export class CurrentChallengeComponent implements OnInit, OnDestroy {
   weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];

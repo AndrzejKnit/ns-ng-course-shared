@@ -10,12 +10,12 @@ const routes: Routes = [
       /* {
         path: 'current-challenge',
         component: CurrentChallengeComponent
-      },
+      },*/
   {
     path: ':mode',
     loadChildren:
       './challenge-edit/challenge-edit.module#ChallengeEditModule'
-  }, */
+  },
   { path: '', redirectTo: '/challenges/today', pathMatch: 'full' }
 ];
 
