@@ -4,7 +4,7 @@ import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
 import { ChallengeEditComponent } from './challenge-edit.component';
-import { SharedModule } from '~/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [ChallengeEditComponent],

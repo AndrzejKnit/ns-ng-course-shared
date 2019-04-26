@@ -12,4 +12,8 @@ export const routes: Routes = [
       path: 'auth',
       loadChildren: './auth/auth.module#AuthModule'
   },
+  {
+    path: 'challenges',
+    loadChildren: './challenges/challenges.module#ChallengesModule'
+},
 ];
