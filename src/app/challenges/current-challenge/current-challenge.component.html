@@ -16,9 +16,7 @@
         class="text-center"
       >{{ currentChallenge.description }}</p>
     </div>
-    <div
-      *ngIf="currentChallenge"
-    >
+    <div class="grid" *ngIf="currentChallenge">
       <div
         class="text-center week-day-label"
         *ngFor="let weekDay of weekDays; let i = index"

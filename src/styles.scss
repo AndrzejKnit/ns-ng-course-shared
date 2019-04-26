@@ -2,8 +2,12 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
 // Import common styles
 @import './theme/colors';
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: sans-serif;
+    margin: 0;
 }
 
 .form {
@@ -11,7 +15,7 @@ body {
 }
 
 .input-field {
-    margin: 1rem 0;
+    margin: 16px 0;
 }
 
 .input {
@@ -26,10 +30,11 @@ body {
 .btn {
     background: $primary;
     color: white;
-    padding: 0.25rem 1rem;
+    padding: 4px 16px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
+    margin: 10px 0;
 }
 
 .btn:hover,
