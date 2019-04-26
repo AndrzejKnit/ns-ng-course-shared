@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { PageRoute, RouterExtensions } from 'nativescript-angular/router';
 import { take } from 'rxjs/operators';
 
 import { ChallengeService } from '../challenge.service';
 
 @Component({
   selector: 'ns-challenge-edit',
-  templateUrl: './challenge-edit.component.html'
+  templateUrl: './challenge-edit.component.html',
+  styleUrls: ['./challenge-edit.component.scss'],
+  moduleId: module.id
 })
 export class ChallengeEditComponent implements OnInit {
   isCreating = true;
@@ -15,7 +18,8 @@ export class ChallengeEditComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private pageRoute: PageRoute,
+    private router: RouterExtensions,
     private challengeService: ChallengeService
   ) {}
 
@@ -23,13 +27,14 @@ export class ChallengeEditComponent implements OnInit {
     // this.activatedRoute.paramMap.subscribe(paramMap => {
     //   console.log(paramMap.get('mode'));
     // });
-
-      this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.pageRoute.activatedRoute.subscribe(activatedRoute => {
+      activatedRoute.paramMap.subscribe(paramMap => {
         if (!paramMap.has('mode')) {
           this.isCreating = true;
         } else {
           this.isCreating = paramMap.get('mode') !== 'edit';
         }
+
         if (!this.isCreating) {
           this.challengeService.currentChallenge
             .pipe(take(1))
@@ -39,6 +44,7 @@ export class ChallengeEditComponent implements OnInit {
             });
         }
       });
+    });
   }
 
   onSubmit(title: string, description: string) {
@@ -48,6 +54,6 @@ export class ChallengeEditComponent implements OnInit {
     } else {
       this.challengeService.updateChallenge(title, description);
     }
-    this.router.navigate(['..'], {relativeTo: this.activatedRoute });
+    this.router.backToPreviousPage();
   }
 }
