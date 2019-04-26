@@ -1,6 +1,8 @@
 import { Component, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { Subscription } from 'rxjs';
 
+import { DayModalComponent } from '../day-modal/day-modal.component';
 import { UIService } from '../../shared/ui.service';
 import { ChallengeService } from '../challenge.service';
 import { Challenge } from '../challenge.model';
@@ -11,7 +13,8 @@ import { Day, DayStatus } from '../day.model';
   templateUrl: './current-challenge.component.html',
   styleUrls: [
     './current-challenge.component.scss'
-  ]
+  ],
+  moduleId: module.id
 })
 export class CurrentChallengeComponent implements OnInit, OnDestroy {
   weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -19,6 +22,7 @@ export class CurrentChallengeComponent implements OnInit, OnDestroy {
   private curChallengeSub: Subscription;
 
   constructor(
+    private modalDialog: ModalDialogService,
     private vcRef: ViewContainerRef,
     private uiService: UIService,
     private challengeService: ChallengeService
@@ -53,6 +57,20 @@ export class CurrentChallengeComponent implements OnInit, OnDestroy {
     if (!this.getIsSettable(day.dayInMonth)) {
       return;
     }
+    this.modalDialog
+      .showModal(DayModalComponent, {
+        fullscreen: true,
+        viewContainerRef: this.uiService.getRootVCRef()
+          ? this.uiService.getRootVCRef()
+          : this.vcRef,
+        context: { date: day.date, status: day.status }
+      })
+      .then((status: DayStatus) => {
+        if (status === DayStatus.Open) {
+          return;
+        }
+        this.challengeService.updateDayStatus(day.dayInMonth, status);
+      });
   }
 
   ngOnDestroy() {

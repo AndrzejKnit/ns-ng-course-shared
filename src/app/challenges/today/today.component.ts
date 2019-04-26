@@ -12,6 +12,8 @@ import { Day, DayStatus } from '../day.model';
 })
 export class TodayComponent implements OnInit, OnDestroy {
   currentDay: Day;
+  isLoading = false;
+
   private curChallengeSub: Subscription;
 
   constructor(private challengeService: ChallengeService) {}
@@ -22,6 +24,17 @@ export class TodayComponent implements OnInit, OnDestroy {
         if (challenge) {
           this.currentDay = challenge.currentDay;
         }
+      }
+    );
+
+    this.challengeService.fetchCurrentChallenge().subscribe(
+      res => {
+        console.log('Fetched challenge...');
+        this.isLoading = false;
+      },
+      err => {
+        console.log(err);
+        this.isLoading = false;
       }
     );
   }

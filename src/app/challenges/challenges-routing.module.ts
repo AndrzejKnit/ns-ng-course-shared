@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TodayComponent } from './today/today.component';
-//import { CurrentChallengeComponent } from './current-challenge/current-challenge.component';
+import { CurrentChallengeComponent } from './current-challenge/current-challenge.component';
 
 const routes: Routes = [
 
       { path: 'today', component: TodayComponent },
-      /* {
+      {
         path: 'current-challenge',
         component: CurrentChallengeComponent
-      },*/
+      },
   {
     path: ':mode',
     loadChildren:
