@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
-import { take, tap, switchMap } from 'rxjs/operators';
+import { take, tap, switchMap, map } from 'rxjs/operators';
 
 import { Challenge } from './challenge.model';
 import { DayStatus, Day } from './day.model';
@@ -41,7 +41,7 @@ export class ChallengeService implements OnDestroy {
           `https://ns-ng-course-98db2.firebaseio.com/challenge/${currentUser.id}.json?auth=${currentUser.token}`
         );
       }),
-      tap(resData => {
+      map(resData => {
         if (resData) {
           const loadedChallenge = new Challenge(
             resData.title,
@@ -50,7 +50,13 @@ export class ChallengeService implements OnDestroy {
             resData.month,
             resData._days
           );
-          this._currentChallenge.next(loadedChallenge);
+          return loadedChallenge;
+          }
+          return null;
+        }),
+      tap(challenge => {
+        if (challenge) {
+          this._currentChallenge.next(challenge);
         }
       })
     );

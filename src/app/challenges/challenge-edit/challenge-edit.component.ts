@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { take, switchMap } from 'rxjs/operators';
 
 import { ChallengeService } from '../challenge.service';
+
 
 @Component({
   selector: 'ns-challenge-edit',
@@ -32,11 +34,21 @@ export class ChallengeEditComponent implements OnInit {
         }
         if (!this.isCreating) {
           this.challengeService.currentChallenge
-            .pipe(take(1))
+            .pipe(take(1), switchMap(curChallenge => {
+              if (!curChallenge) {
+                return this.challengeService.fetchCurrentChallenge();
+              }
+              return of(curChallenge);
+            }))
             .subscribe(challenge => {
-              this.title = challenge.title;
-              this.description = challenge.description;
+              if (challenge) {
+                  this.title = challenge.title;
+                  this.description = challenge.description;
+              }
             });
+        } else {
+          this.title = '';
+          this.description = '';
         }
       });
   }
