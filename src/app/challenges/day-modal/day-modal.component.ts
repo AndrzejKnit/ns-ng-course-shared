@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { DayStatus } from '../day.model';
 
@@ -6,11 +6,11 @@ import { DayStatus } from '../day.model';
   selector: 'ns-day-modal',
   templateUrl: './day-modal.component.html',
   styleUrls: ['./day-modal.component.scss'],
-  moduleId: module.id
 })
 export class DayModalComponent implements OnInit {
   loadedDate: Date;
   loadedStatus: 'complete' | 'fail' = null;
+  @Output() actionSelect = new EventEmitter<DayStatus>();
 
   constructor() {}
 
@@ -30,6 +30,6 @@ export class DayModalComponent implements OnInit {
   }
 
   onHandleInput(action: DayStatus) {
-   // this.modalParams.closeCallback(action);
+    this.actionSelect.emit(action);
   }
 }
