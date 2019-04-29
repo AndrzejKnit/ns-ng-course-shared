@@ -1,7 +1,7 @@
-<div class="modal">
-  <h1 class="h1">{{ loadedDate | date }}</h1>
+<FlexboxLayout>
+  <Label class="h1" [text]="loadedDate | date"></Label>
   <ns-challenge-actions
     (actionSelect)="onHandleInput($event)"
     [chosen]="loadedStatus"
   ></ns-challenge-actions>
-</div>
+</FlexboxLayout>
