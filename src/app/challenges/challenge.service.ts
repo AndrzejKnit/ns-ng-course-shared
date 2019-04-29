@@ -69,12 +69,14 @@ export class ChallengeService implements OnDestroy {
       new Date().getFullYear(),
       new Date().getMonth()
     );
-    this.saveToServer(newChallenge);
     this._currentChallenge.next(newChallenge);
+    return this.saveToServer(newChallenge);
   }
 
   updateChallenge(title: string, description: string) {
-    this._currentChallenge.pipe(take(1)).subscribe(challenge => {
+    return this._currentChallenge.pipe(
+      take(1),
+      switchMap(challenge => {
       const updatedChallenge = new Challenge(
         title,
         description,
@@ -82,9 +84,10 @@ export class ChallengeService implements OnDestroy {
         challenge.month,
         challenge.days
       );
-      this.saveToServer(updatedChallenge);
       this._currentChallenge.next(updatedChallenge);
-    });
+      return this.saveToServer(updatedChallenge);
+    })
+    );
   }
 
   updateDayStatus(dayInMonth: number, status: DayStatus) {
@@ -97,7 +100,7 @@ export class ChallengeService implements OnDestroy {
       );
       challenge.days[dayIndex].status = status;
       this._currentChallenge.next(challenge);
-      this.saveToServer(challenge);
+      this.saveToServer(challenge).subscribe(res => null);
     });
   }
 
@@ -106,7 +109,7 @@ export class ChallengeService implements OnDestroy {
   }
 
   private saveToServer(challenge: Challenge) {
-    this.authService.user
+    return this.authService.user
       .pipe(
           take(1),
         switchMap(currentUser => {
@@ -118,9 +121,6 @@ export class ChallengeService implements OnDestroy {
             challenge
           );
         })
-      )
-      .subscribe(res => {
-        console.log(res);
-      });
+      );
   }
 }

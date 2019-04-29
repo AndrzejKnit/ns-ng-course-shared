@@ -56,10 +56,17 @@ export class ChallengeEditComponent implements OnInit {
   onSubmit(title: string, description: string) {
     // ...
     if (this.isCreating) {
-      this.challengeService.createNewChallenge(title, description);
+      this.challengeService
+      .createNewChallenge(title, description)
+      .subscribe(res => {
+        this.router.navigate(['./challenges/current-challenge'], {relativeTo: this.activatedRoute });
+      });
     } else {
-      this.challengeService.updateChallenge(title, description);
-    }
-    this.router.navigate(['..'], {relativeTo: this.activatedRoute });
+      this.challengeService
+      .updateChallenge(title, description)
+      .subscribe(res => {
+        this.router.navigate(['./challenges/current-challenge'], {relativeTo: this.activatedRoute });
+    });
+  }
   }
 }
