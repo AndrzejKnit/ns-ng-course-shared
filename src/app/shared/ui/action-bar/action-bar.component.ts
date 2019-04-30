@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { UIService } from '../../ui.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'ns-action-bar',
@@ -12,8 +12,13 @@ export class ActionBarComponent implements OnInit {
   @Input() hasChallenge = false;
 
   constructor(
-    private uiService: UIService
+   private authService: AuthService
   ) {}
+
+    onLogout() {
+      this.authService.logout();
+    }
+
 
   ngOnInit() {}
 
