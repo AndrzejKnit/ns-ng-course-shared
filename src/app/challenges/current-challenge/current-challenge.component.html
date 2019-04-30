@@ -35,6 +35,7 @@
           completed: day.status === 1,
           failed: day.status === 2
         }"
+        [ngStyle]="{'grid-row': getRow(i, day) , 'grid-column': day.dayInWeek + 1 }"
         (click)="onChangeStatus(day)"
       >
         <span >{{ day.dayInMonth }}</span>
