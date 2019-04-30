@@ -1,5 +1,9 @@
 <ns-action-bar [hasChallenge]="!isCreating"></ns-action-bar>
-<form class="form" (ngSubmit)="onSubmit(titleCtrl.value, descriptionCtrl.value)">
+<form
+  class="form"
+  (ngSubmit)="onSubmit(titleCtrl.value, descriptionCtrl.value)"
+  *ngIf="!isLoading"
+  >
   <div class="input-field">
     <Label
       class="label"
@@ -41,3 +45,4 @@
 
   >Save</button>
 </form>
+<ns-loading-indicator *ngIf="isLoading"></ns-loading-indicator>

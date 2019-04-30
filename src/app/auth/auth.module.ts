@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthComponent } from './auth.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -15,7 +16,9 @@ import { AuthComponent } from './auth.component';
             {
                 path: '', component: AuthComponent
             }
-        ]),
+        ]
+        ),
+        SharedModule,
         ReactiveFormsModule
         ]
 })

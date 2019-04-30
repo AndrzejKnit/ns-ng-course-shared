@@ -14,6 +14,7 @@ export class ChallengeEditComponent implements OnInit {
   isCreating = true;
   title = '';
   description = '';
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,6 +37,7 @@ export class ChallengeEditComponent implements OnInit {
           this.challengeService.currentChallenge
             .pipe(take(1), switchMap(curChallenge => {
               if (!curChallenge) {
+                this.isLoading = true;
                 return this.challengeService.fetchCurrentChallenge();
               }
               return of(curChallenge);
@@ -45,6 +47,7 @@ export class ChallengeEditComponent implements OnInit {
                   this.title = challenge.title;
                   this.description = challenge.description;
               }
+              this.isLoading = false;
             });
         } else {
           this.title = '';

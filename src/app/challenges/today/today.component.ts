@@ -26,6 +26,7 @@ export class TodayComponent implements OnInit, OnDestroy {
         }
       }
     );
+      this.isLoading = true;
 
     this.challengeService.fetchCurrentChallenge().subscribe(
       res => {
