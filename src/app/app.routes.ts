@@ -6,7 +6,7 @@ import { AuthGuard } from './auth/auth.guard';
 export const routes: Routes = [
   {
       path: '',
-      redirectTo: '/auth',
+      redirectTo: '/challenges/today',
       pathMatch: 'full',
   },
   {

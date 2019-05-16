@@ -28,8 +28,7 @@ var ChallengeEditComponent = /** @class */ (function () {
     ChallengeEditComponent = __decorate([
         core_1.Component({
             selector: 'ns-challenge-edit',
-            templateUrl: './challenge-edit.component.html',
-            styleUrls: ['./challenge-edit.component.scss'],
+            templateUrl: './challenge-edit.component.html'
             moduleId: module.id,
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, router_2.PageRoute])

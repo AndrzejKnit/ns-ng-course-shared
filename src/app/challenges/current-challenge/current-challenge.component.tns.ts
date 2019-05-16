@@ -12,7 +12,7 @@ import { Day, DayStatus } from '../day.model';
   selector: 'ns-current-challenge',
   templateUrl: './current-challenge.component.html',
   styleUrls: [
-    './current-challenge.component.scss'
+    './current-challenge.component.tns.scss'
   ],
   moduleId: module.id
 })
